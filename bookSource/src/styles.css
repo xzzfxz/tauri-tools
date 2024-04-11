@@ -13,3 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+* {
+  padding: 0;
+  margin: 0;
+}

@@ -19,9 +19,11 @@
     },
     "windows": [
       {
-        "title": "booksource",
-        "width": 800,
-        "height": 600
+        "title": "书源",
+        "width": 1000,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 400
       }
     ],
     "security": {
