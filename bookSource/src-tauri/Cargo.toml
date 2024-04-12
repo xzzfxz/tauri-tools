@@ -1,6 +1,6 @@
 [package]
 name = "booksource"
-version = "0.0.0"
+version = "1.0.0"
 description = "书源"
 authors = ["you"]
 edition = "2021"
@@ -11,7 +11,9 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1.6.1", features = [ "dialog-save", "dialog-open",
+tauri = { version = "1.6.1", features = [
+  "dialog-save",
+  "dialog-open",
   "shell-open",
 ] }
 serde = { version = "1", features = ["derive"] }
