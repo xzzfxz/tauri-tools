@@ -15,13 +15,18 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "dialog": {
+        "all": false,
+        "open": true,
+        "save": true
       }
     },
     "windows": [
       {
         "title": "书源",
         "width": 1000,
-        "height": 800,
+        "height": 400,
         "minWidth": 800,
         "minHeight": 400
       }

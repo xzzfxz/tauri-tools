@@ -1,0 +1,45 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @extend .flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-shrink {
+  flex-shrink: 0;
+}
+
+.click-active {
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/**************************搜索条件******************************/
+.search-container {
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 12px;
+  .search-item {
+    margin-left: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
