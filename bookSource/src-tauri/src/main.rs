@@ -12,7 +12,8 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             controller::delete_repeat,
-            controller::download_file
+            controller::download_file,
+            controller::delete_online_repeat
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

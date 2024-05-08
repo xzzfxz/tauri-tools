@@ -13,7 +13,8 @@
     "@tauri-apps/api": "^1",
     "@tauri-apps/plugin-dialog": "2.0.0-beta.2",
     "ant-design-vue": "^4.1.2",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.0.13"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1",

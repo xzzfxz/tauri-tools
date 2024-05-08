@@ -33,6 +33,38 @@ fn get_domain(url: String) -> String {
     domain.to_string()
 }
 
+/// 列表去重
+fn delete_fn(raw_list: Vec<Value>, book_map: &mut HashMap<String, Value>) -> Result<()> {
+    // 遍历生成map去重
+    for item in raw_list.iter() {
+        let source_item: SourceItem = serde_json::from_value(item.clone())?;
+        // 搜索字段为空
+        if source_item.search_url == None {
+            continue;
+        }
+        let ori_url = source_item.book_source_url;
+        if ori_url == "" {
+            continue;
+        }
+        let domain = get_domain(ori_url);
+        if domain == "" {
+            continue;
+        }
+        // 判断更新时间
+        if book_map.contains_key(&domain) {
+            let pre_value = book_map.get(&domain).unwrap().clone();
+            let pre_item: SourceItem = serde_json::from_value(pre_value.clone())?;
+            // 使用最近更新的
+            if pre_item.last_update_time < source_item.last_update_time {
+                book_map.insert(domain.clone(), item.clone());
+            }
+        } else {
+            book_map.insert(domain, item.clone());
+        }
+    }
+    Ok(())
+}
+
 /**
  * @description: 书源去重
  * @param {*} Result
@@ -51,39 +83,31 @@ pub fn delete_repeat(path_list: Vec<String>) -> Result<RepeatRes> {
         let raw_list: Vec<Value> = serde_json::from_str(&contents)?;
         pre_len = pre_len + raw_list.len();
 
-        // 遍历生成map去重
-        for item in raw_list.iter() {
-            let source_item: SourceItem = serde_json::from_value(item.clone())?;
-
-            // 搜索字段为空
-            if source_item.search_url == None {
-                continue;
-            }
-
-            let ori_url = source_item.book_source_url;
-            if ori_url == "" {
-                continue;
-            }
-
-            let domain = get_domain(ori_url);
-            if domain == "" {
-                continue;
-            }
-
-            // 判断更新时间
-            if book_map.contains_key(&domain) {
-                let pre_value = book_map.get(&domain).unwrap().clone();
-                let pre_item: SourceItem = serde_json::from_value(pre_value.clone())?;
-                // 使用最近更新的
-                if pre_item.last_update_time < source_item.last_update_time {
-                    book_map.insert(domain.clone(), item.clone());
-                }
-            } else {
-                book_map.insert(domain, item.clone());
-            }
-        }
+        delete_fn(raw_list, &mut book_map)?;
     }
     println!("去重前的长度: {}", pre_len);
+    let mut last_list: Vec<Value> = book_map.into_values().collect();
+    let cur_len = last_list.len();
+    REPEAT_LIST.lock().unwrap().clear();
+    REPEAT_LIST.lock().unwrap().append(&mut last_list);
+    Ok(RepeatRes { pre_len, cur_len })
+}
+
+/**
+ * @description: 在线书源去重
+ * @param {*} Result
+ * @return {*}
+ */
+pub async fn delete_online_repeat(url: String) -> Result<RepeatRes> {
+    let mut book_map: HashMap<String, Value> = HashMap::new();
+
+    let client = reqwest::Client::new();
+    let res: reqwest::Response = client.get(url).send().await?;
+    let list = res.json::<Vec<Value>>().await?;
+    let pre_len = list.len();
+
+    delete_fn(list, &mut book_map)?;
+
     let mut last_list: Vec<Value> = book_map.into_values().collect();
     let cur_len = last_list.len();
     REPEAT_LIST.lock().unwrap().clear();

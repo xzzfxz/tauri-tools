@@ -1,12 +1,10 @@
 <template>
   <div class="body-container">
-    <RepeatIndex />
+    <router-view></router-view>
   </div>
 </template>
 
-<script setup lang="ts">
-import RepeatIndex from "@/views/repeat/index.vue";
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .body-container {
