@@ -7,11 +7,14 @@
   },
   "package": {
     "productName": "booksource",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "tauri": {
     "allowlist": {
       "all": false,
+      "process": {
+        "relaunch": true
+      },
       "shell": {
         "all": false,
         "open": true
@@ -44,6 +47,18 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
+      ]
+    },
+    "updater": {
+      "active": true,
+      "dialog": false,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEEzQUFFNUU3MTVEODNEQkUKUldTK1BkZ1Y1K1dxbzAzQ1dwcUNlZHBqU3pxK3hpVFhJTlh5WGUyUkNVZjdvRTNlVjEvSng0U24K",
+      "windows": {
+        "installMode": "passive",
+        "installerArgs": []
+      },
+      "endpoints": [
+        "https://xzzfxz.github.io/lc.github.io/bookSource/bookSource.json"
       ]
     }
   }
