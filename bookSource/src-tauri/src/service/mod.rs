@@ -55,7 +55,10 @@ fn delete_fn(raw_list: Vec<Value>, book_map: &mut HashMap<String, Value>) -> Res
             let pre_value = book_map.get(&domain).unwrap().clone();
             let pre_item: SourceItem = serde_json::from_value(pre_value.clone())?;
             // 使用最近更新的
-            if pre_item.last_update_time < source_item.last_update_time {
+            let pre_time = pre_item.last_update_time.unwrap_or(0);
+            let cur_time = source_item.last_update_time.unwrap_or(0);
+            println!("前一个：{}, 后一个: {}", pre_time, cur_time);
+            if pre_time < cur_time {
                 book_map.insert(domain.clone(), item.clone());
             }
         } else {

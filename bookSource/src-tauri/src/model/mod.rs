@@ -7,7 +7,7 @@ pub struct SourceItem {
     pub book_source_url: String,
     /// 上次更新时间
     #[serde(rename = "lastUpdateTime")]
-    pub last_update_time: u64,
+    pub last_update_time: Option<u64>,
     #[serde(rename = "searchUrl")]
     /// 搜索url
     pub search_url: Option<String>,
