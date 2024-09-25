@@ -26,3 +26,4 @@ pub const CHARSET: &[&str] = &[
 ];
 
 pub const CODE_ST: i32 = 58344;
+pub const CODE_ED: u32 = 58715;

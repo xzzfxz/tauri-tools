@@ -1,6 +1,6 @@
 mod usual;
 
-use usual::{CHARSET, CODE_ST};
+use usual::{CHARSET, CODE_ED, CODE_ST};
 
 fn turn_text(code_num: u32) -> String {
     let index = code_num as i32 - CODE_ST;
@@ -17,7 +17,10 @@ pub fn get_true_text(text: &str) -> String {
     let mut last_text = "".to_string();
     for c in text.chars() {
         let code_num = c as u32;
-        let text = turn_text(code_num);
+        let mut text = c.to_string();
+        if code_num >= CODE_ST as u32 && code_num <= CODE_ED {
+            text = turn_text(code_num);
+        }
         last_text.push_str(&text);
     }
     last_text
