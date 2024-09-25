@@ -4,6 +4,7 @@
 mod controller;
 mod model;
 mod service;
+mod utils;
 
 fn main() {
     tauri::Builder::default()

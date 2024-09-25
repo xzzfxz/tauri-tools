@@ -1,13 +1,16 @@
+mod tools;
+
+use crate::model::{BookInfo, ResponseResult, SearchResult};
 use anyhow::Result;
 use reqwest::header::USER_AGENT;
-use serde_json::Value;
+use tools::turn_search_text;
 
 /**
  * @description: 查询
  * @param {*} text  关键字
  * @return {*}
  */
-pub async fn search(text: &str) -> Result<()> {
+pub async fn search(text: &str) -> Result<Vec<BookInfo>> {
     println!("search: {}", text);
     let url = format!(
         "https://fanqienovel.com/api/author/search/search_book/v1?\
@@ -23,16 +26,10 @@ pub async fn search(text: &str) -> Result<()> {
     let client = reqwest::Client::new();
     let res: reqwest::Response = client.get(url).header(USER_AGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36").send().await?;
     if res.status().is_success() {
-        let text = res.text().await?;
-        println!("{:?}", text);
+        let result = res.json::<ResponseResult<SearchResult>>().await?;
+        let mut book_list = result.data.search_book_data_list;
+        let last_list = turn_search_text(&mut book_list);
+        // println!("{:?}", last_list);
     }
-
-    // delete_fn(list, &mut book_map)?;
-
-    // let mut last_list: Vec<Value> = book_map.into_values().collect();
-    // let cur_len = last_list.len();
-    // REPEAT_LIST.lock().unwrap().clear();
-    // REPEAT_LIST.lock().unwrap().append(&mut last_list);
-    // Ok(RepeatRes { pre_len, cur_len })
-    Ok(())
+    Ok(vec![])
 }
