@@ -393,13 +393,13 @@
         return charset[bias];
       }
 
-      const str =
-        "刺耳蝉鸣混杂彼伏鸣笛，荡流湍急街，灼热阳炙烤灰褐沥青，热量涌，整街仿佛扭曲。";
+      const str = "房客";
       let lastStr = "";
       for (let s of str) {
         const cc = s.charCodeAt(0);
-        const ch = interpreter(cc);
-        lastStr += ch;
+        console.log(cc, "======");
+        // const ch = interpreter(cc);
+        // lastStr += ch;
       }
       console.log(lastStr);
     </script>

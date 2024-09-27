@@ -674,6 +674,7 @@ name = "fanqie"
 version = "0.0.0"
 dependencies = [
  "anyhow",
+ "lazy_static",
  "reqwest",
  "serde",
  "serde_json",

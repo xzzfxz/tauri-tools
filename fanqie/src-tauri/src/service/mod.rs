@@ -28,8 +28,9 @@ pub async fn search(text: &str) -> Result<Vec<BookInfo>> {
     if res.status().is_success() {
         let result = res.json::<ResponseResult<SearchResult>>().await?;
         let mut book_list = result.data.search_book_data_list;
-        let last_list = turn_search_text(&mut book_list);
-        // println!("{:?}", last_list);
+        let _ = turn_search_text(&mut book_list);
+        println!("{:?}", book_list);
+        return Ok(book_list);
     }
     Ok(vec![])
 }

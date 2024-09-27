@@ -31,3 +31,17 @@ pub struct BookInfo {
     pub thumb_url: String,
     pub word_count: u32,
 }
+
+// 标题字体映射
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TitleFont {
+    pub code: String,
+    pub text: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ResponseInterface<T> {
+    pub code: i32,
+    pub msg: String,
+    pub result: T,
+}

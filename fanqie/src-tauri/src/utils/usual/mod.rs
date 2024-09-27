@@ -1,3 +1,23 @@
+use crate::model::TitleFont;
+use lazy_static::lazy_static;
+use serde_json::from_reader;
+use std::collections::HashMap;
+use std::fs::File;
+use std::sync::Mutex;
+
+// 使用 lazy_static 创建一个全局的 HashMap
+lazy_static! {
+    pub static ref CONFIG: Mutex<HashMap<String, String>> = {
+        let file = File::open("src/assets/font.json").expect("Unable to open file");
+        let list: Vec<TitleFont> = from_reader(file).expect("Unable to parse JSON");
+        let mut config: HashMap<String, String> = HashMap::new();
+        for item in list.iter() {
+            config.insert(item.code.to_string(), item.text.to_string());
+        }
+        Mutex::new(config)
+    };
+}
+
 pub const CHARSET: &[&str] = &[
     "D", "在", "主", "特", "家", "军", "然", "表", "场", "4", "要", "只", "v", "和", "?", "6",
     "别", "还", "g", "现", "儿", "岁", "?", "?", "此", "象", "月", "3", "出", "战", "工", "相",
