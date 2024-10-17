@@ -30,7 +30,6 @@ pub async fn search(text: &str) -> Result<Vec<BookInfo>> {
         let result = res.json::<ResponseResult<SearchResult>>().await?;
         let mut book_list = result.data.search_book_data_list;
         let _ = turn_search_text(&mut book_list);
-        println!("{:?}", book_list);
         return Ok(book_list);
     }
     Ok(vec![])
