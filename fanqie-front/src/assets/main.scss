@@ -1,0 +1,18 @@
+@import './base.css';
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  @extend .flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.click-active {
+  &:active {
+    user-select: none;
+    opacity: 0.8;
+  }
+}
